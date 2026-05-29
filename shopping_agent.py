@@ -13,9 +13,6 @@ load_dotenv()
 DB_PATH = os.path.join(os.path.dirname(__file__), "store.db")
 llm = ChatGroq(model="qwen/qwen3-32b", temperature=0)
 vision_llm = ChatGroq(model="meta-llama/llama-4-scout-17b-16e-instruct", temperature=0)
-
-
-
 @tool
 def search_products(query: str, max_price: Optional[float] = None, is_organic: Optional[bool] = None) -> str:
     """
@@ -135,10 +132,6 @@ def describe_product_image(image_path: str) -> str:
     response = vision_llm.invoke([message])
     return response.content
 
-
-# ---------------------------------------------------------------------------
-# Agent
-# ---------------------------------------------------------------------------
 
 agent = create_agent(
     tools=[search_products, get_rating, checkout, describe_product_image],
